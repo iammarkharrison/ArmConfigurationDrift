@@ -37,7 +37,8 @@ function GetResourcesInRG
     )
     $debugPreference = 'SilentlyContinue'
     $currentSubscriptionId = (Get-AzureRmContext).Subscription.SubscriptionId
-    $resources = Get-AzureRmResource -ResourceId "/subscriptions/$currentSubscriptionId/resourceGroups/$resourceGroupName/resources" -ExpandProperties
+    // updated for PowerShell 6.0
+    $resources = Get-AzureRmResource -ODataQuery "subscriptionid eq '$($currentSubscriptionId)' and resourcegroup eq '$($resourceGroupName)'" -ExpandProperties
     return $resources
 
 }
